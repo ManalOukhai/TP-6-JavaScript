@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exercice 2</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      img {
+        display: block;
+        margin-bottom: 15px;
+      }
+
+      button {
+        margin: 5px 0;
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+
+      #info {
+        margin-top: 15px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+
+    <img id="photo" src="https://picsum.photos/300/200" alt="Image aleatoire">
+
+    <button id="btnVerifier">Verifier l'attribut alt</button>
+    <button id="btnModifier">Changer l'image</button>
+
+    <p id="info"></p>
+
+    <script>
+      const photo = document.getElementById("photo");
+      const btnVerifier = document.getElementById("btnVerifier");
+      const btnModifier = document.getElementById("btnModifier");
+      const info = document.getElementById("info");
+
+      // verifier alt
+      btnVerifier.addEventListener("click", function() {
+
+        if (photo.hasAttribute("alt")) {
+          const valeurAlt = photo.getAttribute("alt");
+          info.textContent = "Attribut alt present : " + valeurAlt;
+        } else {
+          info.textContent = "Attribut alt absent, ajout en cours...";
+          photo.setAttribute("alt", "Photo sans description");
+        }
+
+      });
+
+      // changer image
+      btnModifier.addEventListener("click", function() {
+
+        photo.setAttribute("src", "https://picsum.photos/300/201");
+        photo.setAttribute("alt", "Nouvelle image chargee");
+
+        const nouveauSrc = photo.getAttribute("src");
+        const nouveauAlt = photo.getAttribute("alt");
+
+        info.textContent = "Nouveau src : " + nouveauSrc + 
+                           " | Nouveau alt : " + nouveauAlt;
+      });
+    </script>
+
+  </body>
+</html>

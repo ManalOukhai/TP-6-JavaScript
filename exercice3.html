@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exercice 3</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      li {
+        cursor: pointer;
+        margin: 5px 0;
+        font-weight: bold;
+      }
+
+      #resultat {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+
+    <ul id="liste">
+      <li data-prix="12.50" data-stock="8">Stylo rouge</li>
+      <li data-prix="45.00" data-stock="0">Carnet premium</li>
+      <li data-prix="3.99" data-stock="25">Gomme</li>
+      <li data-prix="8.20" data-stock="2">Regle 30cm</li>
+    </ul>
+
+    <p id="resultat"></p>
+
+    <script>
+      const produits = document.querySelectorAll("#liste li");
+      const resultat = document.getElementById("resultat");
+
+      produits.forEach(function(produit) {
+
+        // du nombre de clics
+        produit.dataset.nbClics = 0;
+
+        produit.addEventListener("click", function() {
+
+          const nom = produit.textContent;
+          const prix = produit.dataset.prix;
+          const stock = parseInt(produit.dataset.stock);
+          let nbClics = parseInt(produit.dataset.nbClics);
+
+          // Incrementation du compteur
+          nbClics++;
+          produit.dataset.nbClics = nbClics;
+
+          let message = "Produit : " + nom +
+                        " | Prix : " + prix + "€" +
+                        " | Stock : " + stock + " unites";
+
+          // Gestion des couleurs & message stock
+          if (stock === 0) {
+            message += " (Rupture de stock)";
+            produit.style.color = "red";
+          } 
+          else if (stock <= 3) {
+            produit.style.color = "orange";
+          } 
+          else {
+            produit.style.color = "green";
+          }
+
+          message += " | Nombre de clics : " + nbClics;
+
+          resultat.textContent = message;
+        });
+
+      });
+    </script>
+
+  </body>
+</html>

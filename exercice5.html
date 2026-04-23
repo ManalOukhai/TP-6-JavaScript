@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercice 5 - Liste dynamique</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f6f9;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    #formulaire {
+      margin-bottom: 15px;
+    }
+
+    #champTache {
+      padding: 8px;
+      width: 220px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #btnAjouter {
+      padding: 8px 12px;
+      border-radius: 5px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    #btnAjouter:hover {
+      background-color: #0056b3;
+    }
+
+    #listeTaches {
+      list-style: none;
+      padding: 0;
+      width: 350px;
+    }
+
+    #listeTaches li {
+      background-color: white;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    #listeTaches button {
+      background-color: #dc3545;
+      border: none;
+      color: white;
+      padding: 5px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #listeTaches button:hover {
+      background-color: #a71d2a;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Ma liste de taches</h2>
+
+  <div id="formulaire">
+    <input type="text" id="champTache" placeholder="Nouvelle tache..." />
+    <button id="btnAjouter">Ajouter</button>
+  </div>
+
+  <ul id="listeTaches"></ul>
+
+  <script>
+    const champTache = document.getElementById("champTache");
+    const btnAjouter = document.getElementById("btnAjouter");
+    const listeTaches = document.getElementById("listeTaches");
+
+    btnAjouter.addEventListener("click", function () {
+
+      const texte = champTache.value.trim();
+
+      // Si vide → ne rien faire
+      if (texte === "") return;
+
+      // Creer <li>
+      const li = document.createElement("li");
+
+      // Ajouter attribut
+      const date = new Date().toLocaleDateString();
+      li.setAttribute("data-created", date);
+
+      const span = document.createElement("span");
+      span.textContent = texte;
+
+      // bouton Supprimer
+      const btnSupprimer = document.createElement("button");
+      btnSupprimer.textContent = "Supprimer";
+
+      // Ajouter span et bouton dans li
+      li.appendChild(span);
+      li.appendChild(btnSupprimer);
+
+      // Inserer au debut avec insertBefore
+      listeTaches.insertBefore(li, listeTaches.firstChild);
+
+      // Vider le champ
+      champTache.value = "";
+
+      // suppression
+      btnSupprimer.addEventListener("click", function () {
+        listeTaches.removeChild(li);
+      });
+
+    });
+  </script>
+
+</body>
+</html>

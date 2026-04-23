@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Exercice 7</title>
+<style>
+#zone {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
+  border-radius:12px;
+  overflow:hidden;
+  cursor:none;
+}
+
+#curseur {
+  position:absolute;
+  width:20px;
+  height:20px;
+  background:#e94560;
+  border-radius:50%;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  transition: width 0.1s, height 0.1s;
+}
+
+#coordonnees {
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  color:white;
+  font-family:monospace;
+  font-size:14px;
+}
+.etincelle{
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:yellow;
+  border-radius:50%;
+}
+</style>
+</head>
+<body>
+
+<div id="zone">
+  <div id="curseur"></div>
+  <p id="coordonnees">Deplacez votre souris ici.</p>
+</div>
+
+<script>
+const zone = document.getElementById("zone");
+const curseur = document.getElementById("curseur");
+const coord = document.getElementById("coordonnees");
+
+zone.addEventListener("mousemove", e=>{
+  curseur.style.left = e.offsetX + "px";
+  curseur.style.top = e.offsetY + "px";
+
+  coord.textContent =
+   `X : ${e.offsetX} | Y : ${e.offsetY} | Page : (${e.pageX}, ${e.pageY})`;
+});
+
+zone.addEventListener("mouseenter", ()=>{
+  curseur.style.width="30px";
+  curseur.style.height="30px";
+});
+
+zone.addEventListener("mouseleave", ()=>{
+  curseur.style.width="20px";
+  curseur.style.height="20px";
+  coord.textContent="Deplacez votre souris ici.";
+});
+
+zone.addEventListener("click", e=>{
+  const span = document.createElement("span");
+  span.classList.add("etincelle");
+  span.style.left = e.offsetX+"px";
+  span.style.top = e.offsetY+"px";
+  zone.appendChild(span);
+
+  setTimeout(()=> zone.removeChild(span),500);
+});
+</script>
+</body>
+</html>

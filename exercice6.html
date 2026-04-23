@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Exercice 6</title>
+<style>
+body { font-family: Arial; padding:20px; }
+
+#afficheur {
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:20px;
+  background:#eee;
+  transition: background 0.2s;
+}
+
+.modifier span {
+  padding:3px 6px;
+  border-radius:4px;
+  margin-right:5px;
+  font-size:12px;
+}
+
+.actif { background:green; color:white; }
+.inactif { background:gray; color:white; }
+
+#historique ul { padding-left:20px; }
+</style>
+</head>
+<body>
+
+<h2>Detecteur de touches</h2>
+<p>Appuyez sur n'importe quelle touche du clavier.</p>
+
+<div id="afficheur">
+  <p>Aucune touche detenue.</p>
+</div>
+
+<div id="historique">
+  <h3>Historique des 5 dernieres touches</h3>
+  <ul id="listeHistorique"></ul>
+</div>
+
+<script>
+const afficheur = document.getElementById("afficheur");
+const listeHistorique = document.getElementById("listeHistorique");
+
+let historique = [];
+
+window.addEventListener("keydown", function(e){
+
+  // Escape → reset
+  if(e.key === "Escape"){
+    historique = [];
+    listeHistorique.innerHTML = "";
+    afficheur.innerHTML = "<p>Aucune touche detenue.</p>";
+    afficheur.style.background = "#eee";
+    return;
+  }
+
+  // Couleur selon type
+  if(e.key.length === 1){
+    afficheur.style.background = "#cce5ff"; // bleu
+  }
+  else if(e.key.startsWith("F")){
+    afficheur.style.background = "#d4edda"; // vert
+  }
+  else if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)){
+    afficheur.style.background = "#e2d9f3"; // violet
+  }
+  else{
+    afficheur.style.background = "#ddd";
+  }
+
+  afficheur.innerHTML = `
+    <p><strong>Touche :</strong> ${e.key}</p>
+    <p><strong>Code :</strong> ${e.code}</p>
+    <div class="modifier">
+      <span class="${e.shiftKey ? "actif":"inactif"}">Shift</span>
+      <span class="${e.ctrlKey ? "actif":"inactif"}">Ctrl</span>
+      <span class="${e.altKey ? "actif":"inactif"}">Alt</span>
+    </div>
+  `;
+
+  historique.unshift(e.key);
+  if(historique.length > 5) historique.pop();
+
+  listeHistorique.innerHTML = "";
+  historique.forEach(t => {
+    const li = document.createElement("li");
+    li.textContent = t;
+    listeHistorique.appendChild(li);
+  });
+
+});
+</script>
+</body>
+</html>

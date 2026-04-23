@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercice 4 - classList</title>
+
+  <style>
+    #carte {
+      width: 300px;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .surligne {
+      background-color: #fff3cd;
+      border-color: #ffc107;
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .sombre {
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      border-color: #555;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="carte">
+    <h2>Carte interactive</h2>
+    <p>Survolez cette carte pour la mettre en evidence.</p>
+  </div>
+
+  <button id="btnSombre">Mode sombre</button>
+  <button id="btnReset">Reinitialiser</button>
+
+  <script>
+    const carte = document.getElementById("carte");
+    const btnSombre = document.getElementById("btnSombre");
+    const btnReset = document.getElementById("btnReset");
+
+    // Survol : ajouter la classe surligne
+    carte.addEventListener("mouseenter", function() {
+      carte.classList.add("surligne");
+    });
+
+    // Sortie : retirer la classe surligne
+    carte.addEventListener("mouseleave", function() {
+      carte.classList.remove("surligne");
+    });
+
+    // Mode sombre : toggle
+    btnSombre.addEventListener("click", function() {
+      carte.classList.toggle("sombre");
+    });
+
+    // Reinitialiser : supprimer toutes les classes
+    btnReset.addEventListener("click", function() {
+      carte.className = "";
+      carte.id = "carte"; // on remet l'id pour garder le style initial
+    });
+  </script>
+
+</body>
+</html>
